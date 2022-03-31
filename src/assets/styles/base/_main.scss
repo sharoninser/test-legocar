@@ -1,0 +1,34 @@
+body {
+    min-width: 360px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1560px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.loader {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+   width: 100%;
+   &-icon {
+       width: 52px;
+       height: 52px;
+       svg {
+            width: 52px;
+            height: 52px;
+            animation: rotate 2s linear infinite;
+            transform-origin: center center;
+            circle {
+                stroke-dasharray: 89,200;
+                stroke-dashoffset: 0;
+                animation: dash 2s ease-in-out infinite;
+                stroke-linecap: round;
+            }
+       }
+   } 
+}

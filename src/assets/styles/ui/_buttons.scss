@@ -1,0 +1,23 @@
+.btn {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: $primary;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+    transition: $cubic;
+    cursor: pointer;
+    &:hover {
+        color: lighten($primary, 20%);
+    }
+    &:active {
+        color: darken($primary, 20%);
+    }
+    &:disabled, &.disabled {
+        color: $gray-light;
+        pointer-events: none;
+        user-select: none;
+    }
+}
