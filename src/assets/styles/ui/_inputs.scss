@@ -1,0 +1,35 @@
+.wrapper-input {
+  position: relative;
+  width: 100%;
+  input {
+    font-size: 24px;
+    line-height: 24px;
+    color: $text-main;
+    border: none;
+    outline: none;
+    padding-bottom: 16px;
+    border-bottom: 1px solid $text-main;
+    width: 100%;
+    transition: $cubic;
+    &::placeholder {
+      color: $gray-light;
+    }
+  }
+  .error-text {
+    position: absolute;
+    content: '';
+    top: 100%;
+    left: 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: $error;
+    padding-top: 12px;
+    transition: $cubic;
+  }
+  &.invalid {
+    input {
+      color: $error;
+      border-color: $error;
+    }
+  }
+}
