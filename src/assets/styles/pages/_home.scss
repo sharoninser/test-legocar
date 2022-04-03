@@ -48,6 +48,11 @@
                 grid-template-columns: 1fr;
             }
         }
+        &-notification {
+          text-align: center;
+          font-size: 24px;
+          line-height: 24px;
+        }
     }
     &__add-button {
         position: fixed;
