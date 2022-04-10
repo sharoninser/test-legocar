@@ -9,20 +9,22 @@
                 </div>
                 <div class="home__current">
                     <div class="home__current-card">
-                      <CardCurrent />
+                      <CardNew
+                        :city="getCurrentCityWeather"
+                        :card="'current'"
+                      />
                     </div>
                 </div>
                 <div class="home__other">
                     <transition name="fade" mode="out-in">
-                      <div class="home__other-list" v-if="getListCities.length" key="other-list">
-                        <transition-group name="fade">
-                          <Card
-                            v-for="cityItem in getListCities"
-                            :key="cityItem.city"
-                            :city="cityItem"
-                            @removeCurrent="onRemoveCity"
-                          />
-                        </transition-group>
+                      <div class="home__other-list" v-if="getOtherCityWeather.length" key="other-list">
+                        <CardNew
+                          v-for="otherCity in getOtherCityWeather"
+                          :key="otherCity.name"
+                          :city="otherCity"
+                          :card="'other'"
+                          @removeCurrent="onRemoveCity"
+                        />
                       </div>
                       <p class="home__other-notification" v-else key="notification">Here you will see the weather in other cities</p>
                     </transition>
@@ -33,6 +35,7 @@
                       </svg>
                 </button>
             </div>
+            <!-- {{getWeather}} -->
         </div>
         <Modal v-show="isModalVisible" @close="closeModal" :isOpen="isModalVisible"/>
     </div>
@@ -40,10 +43,11 @@
 </template>
 
 <script>
-import Card from '@/components/Card'
-import CardCurrent from '@/components/CardCurrent'
+// import Card from '@/components/Card'
+// import CardCurrent from '@/components/CardCurrent'
 import Modal from '@/components/Modal'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
+import CardNew from '@/components/CardNew'
 
 export default {
   name: 'home',
@@ -53,12 +57,33 @@ export default {
     }
   },
   components: {
-    Card,
-    CardCurrent,
-    Modal
+    // Card,
+    // CardCurrent,
+    Modal,
+    CardNew
   },
   methods: {
-    ...mapMutations('weatherCities', ['removeCity']),
+    ...mapMutations('weather', ['removeCity']),
+    ...mapActions('weather', ['cityWeather']),
+    geolocation () {
+      navigator.geolocation.getCurrentPosition(this.buildUrl, this.geoError)
+    },
+    buildUrl (position) {
+      const lat = position.coords.latitude
+      const lon = position.coords.longitude
+
+      this.cityWeather({
+        url: '&lat=' + lat + '&lon=' + lon,
+        city: 'currentCity'
+      })
+      // this.timeAgo()
+    },
+    geoError () {
+      this.cityWeather({
+        url: '&lat=0&lon=0',
+        city: 'currentCity'
+      })
+    },
     onRemoveCity (cityName) {
       this.removeCity(cityName)
     },
@@ -70,7 +95,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('weatherCities', ['getListCities'])
+    ...mapGetters('weather', ['getOtherCityWeather', 'getCurrentCityWeather'])
+  },
+  mounted () {
+    // if (this.card === 'current') {
+    this.geolocation()
+    // }
   }
 }
 </script>

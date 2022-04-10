@@ -82,14 +82,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions('weatherCities', ['cityWeather']),
+    ...mapActions('weather', ['cityWeather']),
     close () {
       this.v$.$reset()
       this.inputValue = ''
       this.$emit('close')
     },
     async addCity () {
-      await this.cityWeather('&q=' + this.inputValue)
+      await this.cityWeather({
+        url: '&q=' + this.inputValue,
+        city: 'otherCity'
+      })
       this.close()
     },
     clearInput () {

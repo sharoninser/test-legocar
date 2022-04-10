@@ -1,6 +1,5 @@
 import axios from 'axios'
-const API = process.env.VUE_APP_API
-const KEY = process.env.VUE_APP_KEY
+import { instanceAPI } from '@/api'
 
 export default {
   namespaced: true,
@@ -39,7 +38,7 @@ export default {
   actions: {
     cityCurrentWeather ({ commit }, url) {
       commit('loadingStatus', true)
-      axios.get(API + KEY + url)
+      axios.get(instanceAPI + url)
         .then(response => {
           commit('setCurrentWeather', response.data)
           commit('loadingStatus', false)

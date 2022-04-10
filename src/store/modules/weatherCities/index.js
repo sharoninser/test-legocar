@@ -1,7 +1,6 @@
 import axios from 'axios'
 import moment from 'moment'
-const API = process.env.VUE_APP_API
-const KEY = process.env.VUE_APP_KEY
+import { instanceAPI } from '@/api'
 
 export default {
   namespaced: true,
@@ -52,7 +51,7 @@ export default {
   },
   actions: {
     cityWeather ({ commit }, url) {
-      axios.get(API + KEY + url)
+      axios.get(instanceAPI + url)
         .then(response => {
           commit('setWeather', response.data)
           commit('timeTextFunc')
