@@ -90,8 +90,7 @@ export default {
     },
     async addCity () {
       await this.cityWeather({
-        url: '&q=' + this.inputValue,
-        city: 'otherCity'
+        url: '&q=' + this.inputValue
       })
       this.close()
     },

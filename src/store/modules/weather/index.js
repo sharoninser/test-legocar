@@ -22,7 +22,7 @@ export default {
     }
   },
   mutations: {
-    setCurrentWeather (state, { res, city }) {
+    setWeather (state, { res, city }) {
       if (city === 'currentCity') {
         state.currentCityWeather = res
       } else {
@@ -44,7 +44,8 @@ export default {
       // commit('loadingStatus', true)
       axios.get(instanceAPI + url)
         .then(response => {
-          commit('setCurrentWeather', {
+          commit('loadingStatus', true)
+          commit('setWeather', {
             res: response.data,
             city: city
           })
